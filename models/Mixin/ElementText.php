@@ -565,6 +565,8 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
      */
     public function getUriStringFromFormPost($postArray, $element)
     {
+        print_r($postArray); exit;
+        
         // Attempt to override the defaults with plugin behavior.
         $filterName = array(
             'Flatten',

@@ -1,14 +1,14 @@
 <?php
 /**
  * Omeka
- *
+ * 
  * @copyright Copyright 2007-2012 Roy Rosenzweig Center for History and New Media
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
 /**
  * Generate the form markup for entering one HTML input for an Element.
- *
+ * 
  * @package Omeka\View\Helper
  */
 class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
@@ -31,56 +31,58 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
      * Display one form input for an Element.
      *
      * @param Element $element The Element to display the input for.
-     * @param Omeka_Record_AbstractRecord $record The record to display the
+     * @param Omeka_Record_AbstractRecord $record The record to display the 
      * input for.
      * @param int $index The index of this input. (starting at zero).
      * @param string $value The default value of this input.
      * @param bool $isHtml Whether this input's value is HTML.
      * @return string
      */
-    public function elementInput(Element $element, Omeka_Record_AbstractRecord $record, $index = 0, $value = '', $uri = '', $isHtml = false)
+    public function elementInput(Element $element, Omeka_Record_AbstractRecord $record, $index = 0, $value = '', $isHtml = false, $uri = '')
     {
         $this->_element = $element;
         $this->_record = $record;
 
         $inputNameStem = "Elements[" . $this->_element->id . "][$index]";
-
+        
         $components = array(
             'input' => $this->_getInputComponent($inputNameStem, $value),
-            'uri' => $this->_getUriComponent($inputNameStem, $uri),
             'form_controls' => $this->_getControlsComponent(),
             'html_checkbox' => $this->_getHtmlCheckboxComponent($inputNameStem, $isHtml),
-            'html' => null
+            'html' => null,
+            'uri' => $this->_getUriComponent($inputNameStem, $uri),
         );
-
+        
         $filterName = array('ElementInput',
                             get_class($this->_record),
                             $this->_element->set_name,
                             $this->_element->name);
-
+        
         // Plugins should apply a filter to this HTML in order to display it in a certain way.
         $components = apply_filters($filterName,
-                                    $components,
-                                    array('input_name_stem' => $inputNameStem,
-                                          'value' => $value,
-                                          'uri' => $uri,
-                                          'record' => $this->_record,
+                                    $components, 
+                                    array('input_name_stem' => $inputNameStem, 
+                                          'value' => $value, 
+                                          'record' => $this->_record, 
                                           'element' => $this->_element,
                                           'index' => $index,
-                                          'is_html' => $isHtml));
-
-
+                                          'is_html' => $isHtml,
+                                          'uri' => $uri));
+                                    
+        
         if ($components['html'] !== null) {
             return strval($components['html']);
         }
-
+        
         $html = '<div class="input-block">'
               . '<div class="input">'
               . $components['input']
               . '</div>'
               . $components['form_controls']
-              . $components['uri']
               . $components['html_checkbox']
+              . '<div class="input">'
+              . $components['uri']
+              . '</div>'
               . '</div>';
 
         return $html;
@@ -94,14 +96,14 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
      * @return string
      */
     protected function _getInputComponent($inputNameStem, $value)
-    {
+    {        
         $html = $this->view->formTextarea($inputNameStem . '[text]',
                                           $value,
-                                          array('rows' => 3,
+                                          array('rows' => 3, 
                                                 'cols' => 50));
         return $html;
     }
-
+    
     /**
      * Get the URI input for this Element.
      *
@@ -111,11 +113,13 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
      */
     protected function _getUriComponent($inputNameStem, $uri)
     {
-        $html = 'URI: '. $this->view->formText($inputNameStem . '[uri]',
+        $html = '<label>URI '. $this->view->formText($inputNameStem . '[uri]',
                                           $uri
-                                     );
+                                     )
+        .'</label>';
         return $html;
     }
+
 
     /**
      * Get the button that will allow a user to remove this form input.
@@ -127,7 +131,7 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
     protected function _getControlsComponent()
     {
         $html = '<div class="controls">'
-              . $this->view->formSubmit(null,
+              . $this->view->formSubmit(null, 
                                        __('Remove'),
                                        array('class' => 'remove-element red button'))
               . '</div>';
