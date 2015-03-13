@@ -175,7 +175,8 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
 
         // Flatten this POST array into a string so as to be passed to the
         // necessary helper functions.
-        return $this->_record->getTextStringFromFormPost($postArray, $this->_element);
+        return array('text' => $this->_record->getTextStringFromFormPost($postArray, $this->_element),
+                     'uri' => $this->_record->getUriStringFromFormPost($postArray, $this->_element));
     }
 
     protected function _getHtmlFlagForField($index)
@@ -206,7 +207,7 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
             $elementText = $this->getElementTexts($index);
             if (isset($elementText)) {
                 return array('text' => $elementText->text, 'uri' => $elementText->uri);
-                return $elementText->text;
+//                return $elementText->text;
             } else {
                 return null;
             }

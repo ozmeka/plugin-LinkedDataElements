@@ -512,7 +512,7 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
                 );
 
                 // Ignore fields that are empty (no text)
-                if (empty($elementText)) {
+                if (empty($elementText) && empty($textAttributes['uri'])) {
                     continue;
                 }
                 
@@ -565,28 +565,6 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
      */
     public function getUriStringFromFormPost($postArray, $element)
     {
-        print_r($postArray); exit;
-        
-        // Attempt to override the defaults with plugin behavior.
-        $filterName = array(
-            'Flatten',
-            $this->_getRecordType(),
-            $element->set_name,
-            $element->name);
-
-        // If no filters, this should return null.
-        $flatText = null;
-        $flatText = apply_filters(
-            $filterName,
-            $flatText,
-            array('post_array' => $postArray, 'element' => $element)
-        );
-
-        // If we got something back, short-circuit the built-in processing.
-        if ($flatText) {
-            return $flatText;
-        }
-
         return $postArray['uri'];
     }
 
@@ -616,6 +594,8 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
     {
         $elementRecord = $this->getElementById($elementTextRecord->element_id);
         $textValue = $elementTextRecord->text;
+        $uriValue = $elementTextRecord->uri;
+        
         // Start out as valid by default.
         $isValid = true;
 
@@ -647,7 +627,12 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
                 'element' => $elementRecord,
             )
         );
-
+        
+        if ($uriValue && ! $textValue)
+        {
+            $isValid = false;
+        }
+        
         return $isValid;
     }
 
