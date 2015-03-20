@@ -38,7 +38,7 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
      * @param bool $isHtml Whether this input's value is HTML.
      * @return string
      */
-    public function elementInput(Element $element, Omeka_Record_AbstractRecord $record, $index = 0, $value = '', $isHtml = false, $uri = '')
+    public function elementInput(Element $element, Omeka_Record_AbstractRecord $record, $index = 0, $value = '', $isHtml = false)
     {
         $this->_element = $element;
         $this->_record = $record;
@@ -119,7 +119,6 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
         .'</label>';
         return $html;
     }
-
 
     /**
      * Get the button that will allow a user to remove this form input.

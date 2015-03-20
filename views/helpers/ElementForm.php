@@ -70,7 +70,7 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
             'description' => $descriptionComponent,
             'comment' => $commentComponent,
             'add_input' => $addInputComponent,
-            'html' => null,
+            'html' => null 
         );
 
         $elementSetName = $element->set_name;
@@ -176,7 +176,7 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
         // Flatten this POST array into a string so as to be passed to the
         // necessary helper functions.
         return array('text' => $this->_record->getTextStringFromFormPost($postArray, $this->_element),
-                     'uri' => $this->_record->getUriStringFromFormPost($postArray, $this->_element));
+            'uri' => $this->_record->getUriStringFromFormPost($postArray, $this->_element));
     }
 
     protected function _getHtmlFlagForField($index)

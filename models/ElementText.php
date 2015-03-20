@@ -1,14 +1,14 @@
 <?php
 /**
  * Omeka
- *
+ * 
  * @copyright Copyright 2007-2012 Roy Rosenzweig Center for History and New Media
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
 /**
  * An element text and its metadata.
- *
+ * 
  * @package Omeka\Record
  */
 class ElementText extends Omeka_Record_AbstractRecord
@@ -54,7 +54,7 @@ class ElementText extends Omeka_Record_AbstractRecord
      * @var string
      */
     public $uri;
-
+    
     /**
      * Validate the element text prior to saving.
      *
@@ -104,9 +104,9 @@ class ElementText extends Omeka_Record_AbstractRecord
     }
 
     /**
-     * Set the text.
+     * Set the URI.
      *
-     * @param string $text
+     * @param string $uri
      */
     public function setUri($uri)
     {
@@ -114,7 +114,7 @@ class ElementText extends Omeka_Record_AbstractRecord
     }
 
     /**
-     * Get the text.
+     * Get the URI.
      *
      * @return string
      */
@@ -122,7 +122,7 @@ class ElementText extends Omeka_Record_AbstractRecord
     {
         return (string) $this->uri;
     }
-
+    
     /**
      * Get whether this text is HTML.
      *
