@@ -385,7 +385,7 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
         $textRecord->element_id = $element->id;
         $textRecord->record_type = $this->_getRecordType();
         $textRecord->text = $elementText;
-        $textRecord->uri = $elementUri;
+        $textRecord->uri = $uri;
         $textRecord->html = (int)$isHtml;
             
         $this->_textsToSave[] = $textRecord;
@@ -536,7 +536,7 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
                 $isHtml = isset($textAttributes['html'])
                         ? (int) (boolean) $textAttributes['html']
                         : 0;
-                $this->addTextForElement($element, $elementText, $textAttributes['uri']);
+                $this->addTextForElement($element, $elementText, $isHtml, $textAttributes['uri']);
             }
         }
     }
