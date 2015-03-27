@@ -5,6 +5,7 @@ require_once('models/ElementText.php');
 require_once('models/Mixin/ElementText.php');
 require_once('views/helpers/ElementInput.php');
 require_once('views/helpers/ElementForm.php');
+require_once('views/helpers/Metadata.php');
 
 class LinkedDataElementsPlugin extends Omeka_Plugin_AbstractPlugin
 {
