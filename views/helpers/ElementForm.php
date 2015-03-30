@@ -242,8 +242,17 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
             //$elementText  = $this->_getValueForField($i);
             //$elementUri = '';
             $fields = $this->_getValueForField($i);
-            $elementText = $fields['text'];
-            $elementUri = $fields['uri'];
+//            if (is_array($fields)) // if it has a value at all, it should be an array
+            if ($fields)
+            {
+                $elementText = $fields['text'];
+                $elementUri = $fields['uri'];
+            }
+            else
+            {
+                $elementText = '';
+                $elementUri = '';
+            }
             
             $html .= $this->view->elementInput(
                 $this->_element, $this->_record, $i,
