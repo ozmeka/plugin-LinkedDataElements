@@ -11,6 +11,8 @@ class LinkedDataElementsPlugin extends Omeka_Plugin_AbstractPlugin
 {
     protected $_hooks = array('install', 'uninstall');
 
+//    protected $_filters = array('strainUriField' => array('ElementForm', 'Item', 'Dublin Core', 'Subject'));
+
     public function hookInstall()
     {
         $db = get_db();
@@ -24,4 +26,5 @@ class LinkedDataElementsPlugin extends Omeka_Plugin_AbstractPlugin
         $sql = "ALTER TABLE {$this->_db->ElementText} DROP COLUMN uri";
         $db->query($sql);
     }
+
 }
