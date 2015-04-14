@@ -237,6 +237,11 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
     {
         $fieldCount = $this->_getFormFieldCount() + (int) $extraFieldCount;
         $html = '';
+        
+        $db = get_db();
+        $lcTable = $db->getTable('LcSuggest');
+        $endpoints = $lcTable->getSuggestEndpoints();
+        
         for ($i=0; $i < $fieldCount; $i++)
         {
             //$elementText  = $this->_getValueForField($i);
@@ -255,19 +260,25 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
             }
 
             // only show URI for fields with an associated lookup (as in LcSuggest config)
-            $db = get_db();
-            if ($db->getTable('LcSuggest')->findByElementId($this->_element->id))
+            $showMulti = false;
+            if ($lcTable->findByElementId($this->_element->id))
             {
                 $showUri = true;
+                
+                $endpoint = $lcTable->findByElementId($this->_element->id)->suggest_endpoint;
+                if (!empty($endpoints[$endpoint]['multi']))
+                {
+                    $showMulti = true;
+                }
             }
             else
             {
                 $showUri = false;
             }
-
+            
             $html .= $this->view->elementInput(
                 $this->_element, $this->_record, $i,
-                $elementText, $this->_getHtmlFlagForField($i), $elementUri, $showUri);
+                $elementText, $this->_getHtmlFlagForField($i), $elementUri, $showUri, $showMulti);
         }
         return $html;
     }

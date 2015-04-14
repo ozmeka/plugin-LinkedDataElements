@@ -38,7 +38,7 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
      * @param bool $isHtml Whether this input's value is HTML.
      * @return string
      */
-    public function elementInput(Element $element, Omeka_Record_AbstractRecord $record, $index = 0, $value = '', $isHtml = false, $uri = '', $showUri = true)
+    public function elementInput(Element $element, Omeka_Record_AbstractRecord $record, $index = 0, $value = '', $isHtml = false, $uri = '', $showUri = false, $showMulti = false)
     {
         $this->_element = $element;
         $this->_record = $record;
@@ -46,7 +46,7 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
         $inputNameStem = "Elements[" . $this->_element->id . "][$index]";
 
         $components = array(
-            'input' => $this->_getInputComponent($inputNameStem, $value),
+            'input' => $this->_getInputComponent($inputNameStem, $value, $showMulti),
             'form_controls' => $this->_getControlsComponent(),
             'html_checkbox' => $this->_getHtmlCheckboxComponent($inputNameStem, $isHtml),
             'html' => null,
@@ -101,12 +101,26 @@ class Omeka_View_Helper_ElementInput extends Zend_View_Helper_Abstract
      * @param string $value
      * @return string
      */
-    protected function _getInputComponent($inputNameStem, $value)
+    protected function _getInputComponent($inputNameStem, $value, $showMulti = false)
     {
         $html = $this->view->formTextarea($inputNameStem . '[text]',
                                           $value,
                                           array('rows' => 3,
                                                 'cols' => 50));
+        
+        if ($showMulti)
+        {
+            $parts = explode('[', $inputNameStem);
+            foreach ($parts as $i => $part)
+            {
+                $parts[$i] = str_replace(']', '', $part);
+            }
+            
+            $id_root = implode('-', $parts);
+            
+            $html .= "<div id='{$id_root}-multidiv' style='height: 400px; overflow-y: scroll; display: none;'><ul id='{$id_root}-multilookup' class='treemenu'></div>";
+        }
+        
         return $html;
     }
 
