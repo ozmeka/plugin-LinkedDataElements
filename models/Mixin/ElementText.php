@@ -532,11 +532,13 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
                 }
 
                 //  TM - we'll probably want to add a filter to check URI similar to above
+                $uri = '';
+                if (!empty($textAttributes['uri'])) $uri = $textAttributes['uri'];
 
                 $isHtml = isset($textAttributes['html'])
                         ? (int) (boolean) $textAttributes['html']
                         : 0;
-                $this->addTextForElement($element, $elementText, $isHtml, $textAttributes['uri']);
+                $this->addTextForElement($element, $elementText, $isHtml, $uri);
             }
         }
     }
