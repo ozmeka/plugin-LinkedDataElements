@@ -647,7 +647,7 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
             )
         );
 
-        if ($uriValue && ! $textValue)
+        if ($uriValue && (filter_var($uriValue, FILTER_VALIDATE_URL) === false || !$textValue))
         {
             $isValid = false;
         }
