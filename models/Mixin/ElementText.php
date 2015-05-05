@@ -584,7 +584,15 @@ class Mixin_ElementText extends Omeka_Record_Mixin_AbstractMixin
      */
     public function getUriStringFromFormPost($postArray, $element)
     {
-        return $postArray['uri'];
+        if (!empty($postArray['uri']))
+        {
+            return $postArray['uri'];
+        }
+        else
+        {
+            return null;
+        }
+    
     }
 
     /**
