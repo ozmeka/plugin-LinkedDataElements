@@ -1,6 +1,8 @@
 <?php
 
-//  use our classes instead of the core ones where needed
+//  use our classes instead of the core ones where needed.
+//  Note that this is likely to tie the plugin to a specific version
+//  of Omeka core, requiring manual updating.
 require_once('models/ElementText.php');
 require_once('models/Mixin/ElementText.php');
 require_once('views/helpers/ElementInput.php');
