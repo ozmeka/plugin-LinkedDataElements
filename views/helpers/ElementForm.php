@@ -242,7 +242,8 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
         
         try
         {
-            $lcTable = $db->getTable('LcSuggest');
+//            $lcTable = $db->getTable('LcSuggest');
+            $lcTable = $db->getTable('SuggestAnything');
             $endpoints = $lcTable->getSuggestEndpoints();
             $lcEnabled = true;
         }
