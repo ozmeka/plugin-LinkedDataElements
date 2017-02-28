@@ -789,4 +789,33 @@ SQL
     {
         return count($this->getElementTexts($elementSetName, $elementName));
     }
+
+    /**
+     * Return the title of this record for display/interface purposes
+     *
+     * If no title is present or the title contains no text, returns the passed $default value.
+     * If no $default is given, returns the translated string [Untitled].
+     *
+     * @pararm string|null $default Default value to return if no suitable Title element exists
+     * @return string Raw (unescaped) title string for the record.
+     */
+    public function getDisplayTitle($default = null)
+    {
+        $title = '';
+        $titles = $this->getElementTexts('Dublin Core', 'Title');
+        if ($titles) {
+            $title = $titles[0]->text;
+            if ($titles[0]->html) {
+                $title = trim(html_entity_decode(strip_formatting($title), ENT_QUOTES, 'UTF-8'));
+            }
+        }
+
+        if ($title === '') {
+            if (!$default) {
+                $default = __('[Untitled]');
+            }
+            $title = $default;
+        }
+        return $title;
+    }
 }

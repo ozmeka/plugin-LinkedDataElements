@@ -61,9 +61,8 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
         $inputsComponent = $this->_getInputsComponent($extraFieldCount);
         $descriptionComponent = $this->_getDescriptionComponent();
         $commentComponent = $this->_getCommentComponent();
-        $addInputComponent = $this->view->formSubmit('add_element_' . $this->_element['id'],
-                                         __('Add Input'),
-                                         array('class'=>'add-element'));
+        $addInputComponent = $this->view->formButton('add_element_' . $this->_element['id'],
+            __('Add Input'), array('class'=>'add-element'));
         $components = array(
             'label' => $labelComponent,
             'inputs' => $inputsComponent,
@@ -242,7 +241,6 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
         
         try
         {
-//            $lcTable = $db->getTable('LcSuggest');
             $lcTable = $db->getTable('SuggestAnything');
             $endpoints = $lcTable->getSuggestEndpoints();
             $lcEnabled = true;
@@ -254,10 +252,7 @@ class Omeka_View_Helper_ElementForm extends Zend_View_Helper_Abstract
         
         for ($i=0; $i < $fieldCount; $i++)
         {
-            //$elementText  = $this->_getValueForField($i);
-            //$elementUri = '';
             $fields = $this->_getValueForField($i);
-//            if (is_array($fields)) // if it has a value at all, it should be an array
             if ($fields)
             {
                 $elementText = $fields['text'];
